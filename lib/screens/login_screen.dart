@@ -83,12 +83,10 @@ if (!await checkInternet()) {
       if (!mounted) return;
 
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const MainNavigation(),
-        ),
-      );
+      Navigator.pushReplacementNamed(
+  context,
+  '/home',
+);
 
 
     } on FirebaseAuthException catch (e) {

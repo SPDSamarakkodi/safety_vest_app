@@ -64,9 +64,7 @@ void loadUser() async {
 
 @override
 Widget build(BuildContext context){
-print(
- FirebaseAuth.instance.currentUser!.uid
-);
+
 
 
 
@@ -418,18 +416,28 @@ BorderRadius.circular(15),
 
 
 
-onPressed:() async{
+onPressed: () async {
+  try {
+    // Sign out from Firebase
+    await FirebaseAuth.instance.signOut();
 
+    if (!mounted) return;
 
-await FirebaseAuth.instance.signOut();
+    // Remove the entire authenticated navigation stack
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/login',
+      (route) => false,
+    );
+  } catch (e) {
+    if (!mounted) return;
 
-
-Navigator.pushReplacementNamed(
-context,
-'/login'
-);
-
-
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Logout failed: $e"),
+      ),
+    );
+  }
 },
 
 

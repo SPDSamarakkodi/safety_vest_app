@@ -35,94 +35,46 @@ late Animation<double> fade;
 
 
 @override
-void initState(){
+void initState() {
+  super.initState();
 
-super.initState();
+  controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 2),
+  );
 
+  scale = CurvedAnimation(
+    parent: controller,
+    curve: Curves.elasticOut,
+  );
 
+  fade = CurvedAnimation(
+    parent: controller,
+    curve: Curves.easeIn,
+  );
 
-controller =
-AnimationController(
+  controller.forward();
 
-vsync:this,
+  Future.delayed(
+    const Duration(seconds: 3),
+    () {
+      if (!mounted) return;
 
-duration:
-const Duration(seconds:2),
+      final user = FirebaseAuth.instance.currentUser;
 
-);
-
-
-
-scale =
-CurvedAnimation(
-
-parent:controller,
-
-curve:
-Curves.elasticOut,
-
-);
-
-
-
-fade =
-CurvedAnimation(
-
-parent:controller,
-
-curve:
-Curves.easeIn,
-
-);
-
-
-
-controller.forward();
-
-
-
-Future.delayed(
-
-const Duration(seconds:4),
-
-(){
-
-if(!mounted)return;
-
-
-
-final user =
-FirebaseAuth.instance.currentUser;
-
-
-
-if(user!=null){
-
-Navigator.pushReplacementNamed(
-context,
-'/home'
-);
-
-}
-
-else{
-
-
-Navigator.pushReplacementNamed(
-context,
-'/login'
-);
-
-
-}
-
-
-},
-
-);
-
-
-
+      if (user != null) {
+        Navigator.pushReplacementNamed(
+          context,
+          '/home',
+        );
+      } else {
+        Navigator.pushReplacementNamed(
+          context,
+          '/login',
+        );
+      }
+    },
+  );
 }
 
 

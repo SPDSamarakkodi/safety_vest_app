@@ -15,7 +15,7 @@ import 'services/notification_service.dart';
 //import '../services/history_service.dart';
 import 'package:provider/provider.dart';
 import 'providers/theme_provider.dart';
-
+import 'screens/main_navigation.dart';
 
 
 
@@ -149,13 +149,10 @@ AppTheme.theme,
 
 
 
-routes:{
+routes: {
+  '/login': (context) => const LoginScreen(),
 
-
-'/login':
-(context)=> const LoginScreen(),
-
-
+  '/home': (context) => const MainNavigation(),
 },
 
 
